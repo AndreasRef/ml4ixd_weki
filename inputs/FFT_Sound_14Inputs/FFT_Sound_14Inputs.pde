@@ -7,9 +7,7 @@ import netP5.*;
 OscP5 oscP5;
 NetAddress dest;
 
-
 Minim       minim;
-//AudioPlayer myAudio;
 AudioInput  myAudio; //Use líne in input (microphone/soundflower/lineIn)
 FFT         myAudioFFT;
 
@@ -20,6 +18,8 @@ float       myAudioIndex     = 0.2;
 float       myAudioIndexAmp  = myAudioIndex;
 float       myAudioIndexStep = 0.35;
 
+float avgVolume = 0;
+
 void setup() {
   size(850, 300);
   background(200);
@@ -27,14 +27,11 @@ void setup() {
   minim   = new Minim(this);
   myAudio = minim.getLineIn(Minim.MONO);  //Use líne in input (microphone/soundflower/lineIn)
 
-  //myAudio = minim.loadFile("../../musicFiles/HecQ.mp3"); //Use a music file
-  //myAudio.loop(); //Use a music file
-
   myAudioFFT = new FFT(myAudio.bufferSize(), myAudio.sampleRate());
   myAudioFFT.linAverages(myAudioRange);
   myAudioFFT.window(FFT.GAUSS);
   
-    /* start oscP5, listening for incoming messages at port 9000 */
+  /* start oscP5, listening for incoming messages at port 9000 */
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
 }
@@ -50,7 +47,12 @@ void draw() {
     float tempIndexAvg = (myAudioFFT.getAvg(i) * myAudioAmp) * myAudioIndexAmp;
     float tempIndexCon = constrain(tempIndexAvg, 0, myAudioMax);
     rect( 100 + (i*50), 100, 50, tempIndexCon);
+    avgVolume+=tempIndexAvg;
   }
+  
+  avgVolume = avgVolume/12;
+  text("avgVolume: " + avgVolume, 10, 20);
+  
   myAudioIndexAmp = myAudioIndex;
 
   stroke(255,0,0); 
@@ -69,8 +71,9 @@ void sendOsc() {
   OscMessage msg = new OscMessage("/wek/inputs");
   for (int i = 0; i < myAudioRange; ++i) {
     float tempIndexAvg = (myAudioFFT.getAvg(i) * myAudioAmp) * myAudioIndexAmp;
-    //float tempIndexCon = constrain(tempIndexAvg, 0, myAudioMax);
     msg.add(tempIndexAvg);
   }
+  msg.add(avgVolume);
+  
  oscP5.send(msg, dest);
 }
