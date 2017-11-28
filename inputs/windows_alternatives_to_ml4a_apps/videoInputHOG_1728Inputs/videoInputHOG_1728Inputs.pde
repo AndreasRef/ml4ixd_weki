@@ -30,9 +30,6 @@ NetAddress dest;
 OpenCV opencv;
 Capture video;
 
-int w = 640;
-int h = 480;
-
 PImage testImage;
 int rectW = 150;
 int rectH = 150;
@@ -42,21 +39,21 @@ SVM model;
 
 
 void setup() {
+  size(320, 240);
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
   
   opencv = new OpenCV(this, 50, 50);
-  
-  video = new Capture(this, w/2, h/2, "FaceTime HD Camera", 30);
+ 
+  video = new Capture(this, 320, 240);
   video.start();
-  size(750, 600);
   
   testImage = createImage(50, 50, RGB);
 }
 
 
 
-void draw() {
+void draw() {  
   background(0);
   image(video, 0, 0);
   noFill();
