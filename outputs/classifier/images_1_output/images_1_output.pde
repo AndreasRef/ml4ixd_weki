@@ -8,9 +8,12 @@ void setup() {
   size(600, 400);
   oscP5 = new OscP5(this, 12000);
   
-  imgs = new PImage[2];
+  imgs = new PImage[5];
   imgs[0] = loadImage("0.jpg");
   imgs[1] = loadImage("1.jpg");
+  imgs[2] = loadImage("2.jpg");
+  imgs[3] = loadImage("3.jpg");
+  imgs[4] = loadImage("4.jpg");
 }
 
 void draw() {
