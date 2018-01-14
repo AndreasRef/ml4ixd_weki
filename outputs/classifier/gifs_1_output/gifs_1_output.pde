@@ -1,4 +1,6 @@
-import gifAnimation.*; // https://github.com/01010101/GifAnimation
+// This sketch requires you to manually download the GifAnimation library from https://github.com/01010101/GifAnimation
+// And place it in your Processing libraries folder
+import gifAnimation.*; 
 import oscP5.*;
 OscP5 oscP5;
 
@@ -20,7 +22,7 @@ public void setup() {
   textAlign(CENTER);  
   
   reactionGifs = new Gif[5];
-  for (int i = 0; i<5; i++) {
+  for (int i = 0; i<reactionGifs.length; i++) {
     reactionGifs[i] = new Gif(this, i + ".gif");
     reactionGifs[i].loop();
   }

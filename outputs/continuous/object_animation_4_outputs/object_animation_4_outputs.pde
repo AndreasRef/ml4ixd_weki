@@ -1,7 +1,7 @@
-//This demo allows wekinator to control size, increment, rotation and hue of an object
-//All are continuous values between 0 and 1
+//This demo allows Wekinator to control size, increment, rotation and hue of an object
+//All recieved values shoulb be continuous values between 0 and 1
+//Visual sketch is modified from http://btk.tillnagel.com/tutorials/rotation-translation-matrix.html
 
-//Necessary for OSC communication with Wekinator:
 import oscP5.*;
 OscP5 oscP5;
 
@@ -12,8 +12,6 @@ float hue = 0;
 
 void setup() {  
   size(600, 600);
-  surface.setResizable(true);
-
   oscP5 = new OscP5(this, 12000);
 
   colorMode(HSB);
@@ -43,8 +41,8 @@ void oscEvent(OscMessage theOscMessage) {
       float receivedRot = theOscMessage.get(2).floatValue();
       float receivedHue = theOscMessage.get(3).floatValue();
 
-      objectSize = (int) map(receivedSize, 0, 1, 10, 800);
-      increment = (int) map(receivedIncrement, 0, 1, 1, 100);
+      objectSize = (int) map(receivedSize, 0, 1, 25, 800);
+      increment = (int) map(receivedIncrement, 0, 1, 5, 100);
       rotation = map(receivedRot, 0, 1, 0, 2*PI);
       hue = map(receivedHue, 0, 1, 0, 255);
     } else {

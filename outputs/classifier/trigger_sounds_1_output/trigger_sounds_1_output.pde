@@ -4,7 +4,6 @@ import netP5.*;
 OscP5 oscP5;
 
 Minim minim;
-
 AudioSample[] sounds;
 
 int lastClass = 0;
@@ -15,7 +14,7 @@ void setup()
   size(600, 400);
   minim = new Minim(this);
   oscP5 = new OscP5(this, 12000);
-  
+
   sounds = new AudioSample[4];
   sounds[0] = minim.loadSample( "BD.mp3", 512);
   sounds[1] = minim.loadSample( "SD.wav", 512);
@@ -32,13 +31,12 @@ void draw()
 
 void oscEvent(OscMessage theOscMessage) {
   if (theOscMessage.checkAddrPattern("/wek/outputs") == true) {
-      currentClass = (int) theOscMessage.get(0).floatValue();
-      if (currentClass != lastClass) { //Only trig if current class is different from last class
-        if (currentClass == 1) sounds[0].trigger();
-        if (currentClass == 2) sounds[1].trigger();
-        if (currentClass == 3) sounds[2].trigger();
-        if (currentClass == 4) sounds[3].trigger();
+    currentClass = (int) theOscMessage.get(0).floatValue();
+    if (currentClass != lastClass) { //Only trig if current class is different from last class
+      for (int i = 1; i<=sounds.length; i++) {
+        if (currentClass == i) sounds[i-1].trigger();
       }
-      lastClass = currentClass;
+    }
+    lastClass = currentClass;
   }
 }

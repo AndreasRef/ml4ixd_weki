@@ -1,3 +1,11 @@
+//Messy FFT sound input alternative to Wekinator - will clean it later. Decent enough for prototyping, but consider using something like 
+//https://github.com/fiebrink1/wekinator_examples/tree/master/inputs/AudioInput/AudioInputWithOpenFrameworks/Various_Audio_Inputs
+//for better results.
+
+//Change volThreshold according to the loudness of the sounds you want to use as training input
+//Change the boolean triggerMode to false to send sound information at all times
+
+
 import ddf.minim.*;
 import ddf.minim.analysis.*;
 
@@ -20,24 +28,39 @@ float       myAudioIndexStep = 0.35;
 
 float avgVolume = 0;
 
+boolean sending = false;
+color bgColor; 
+boolean thresholdMode = true;
+float volThreshold = 2.0;
+
+boolean triggerMode = false;
+
+int triggerTimerThreshold = 200;
+long startTimer = 0;
+
 void setup() {
   size(850, 300);
   background(200);
 
   minim   = new Minim(this);
-  myAudio = minim.getLineIn(Minim.MONO);  //Use líne in input (microphone/soundflower/lineIn)
-
+  myAudio = minim.getLineIn(Minim.MONO); 
   myAudioFFT = new FFT(myAudio.bufferSize(), myAudio.sampleRate());
   myAudioFFT.linAverages(myAudioRange);
   myAudioFFT.window(FFT.GAUSS);
   
-  /* start oscP5, listening for incoming messages at port 9000 */
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
 }
 
 void draw() {
-  background(100);
+  long timer = millis() - startTimer;
+  
+  if (sending == true) {
+    bgColor = color(0,180,0);
+  } else {
+    bgColor = color(180, 0, 0);
+  }
+  background(bgColor);
 
   myAudioFFT.forward(myAudio.mix);
 
@@ -51,14 +74,27 @@ void draw() {
   }
   
   avgVolume = avgVolume/12;
+  
+ if (triggerMode) {
+  if (timer > triggerTimerThreshold && avgVolume > volThreshold) { 
+    sending = true;
+    startTimer = millis();
+  } else {
+    sending = false; 
+  }
+ } else {
+   sending = true;
+ }
+  
   text("avgVolume: " + avgVolume, 10, 20);
+  if (sending) text("sending!", 10, 40);
   
   myAudioIndexAmp = myAudioIndex;
 
   stroke(255,0,0); 
   line(100, 100+100, width-100, 100+100);
   
-  sendOsc();
+  if(sending) sendOsc();
 }
 
 void stop() {

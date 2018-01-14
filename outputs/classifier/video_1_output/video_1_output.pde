@@ -6,7 +6,7 @@ Movie[] movies;
 int index = 0;
 
 void setup() {
-  size(600, 400);
+  size(1280, 720);
   oscP5 = new OscP5(this, 12000);
   
   movies = new Movie[2];
