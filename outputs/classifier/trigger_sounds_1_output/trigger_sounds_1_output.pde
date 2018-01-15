@@ -15,11 +15,10 @@ void setup()
   minim = new Minim(this);
   oscP5 = new OscP5(this, 12000);
 
-  sounds = new AudioSample[4];
-  sounds[0] = minim.loadSample( "BD.mp3", 512);
-  sounds[1] = minim.loadSample( "SD.wav", 512);
-  sounds[2] = minim.loadSample( "Suspense1.wav", 512);
-  sounds[3] = minim.loadSample( "Suspense2.wav", 512);
+  sounds = new AudioSample[4];  
+  for (int i = 0; i< sounds.length; i++) {
+    sounds[i] = minim.loadSample( i + ".wav");
+  }
 }
 
 void draw()
