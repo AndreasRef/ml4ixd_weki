@@ -1,11 +1,13 @@
 /*
-Thomas Sanchez Lengeling.
+ OBS: WINDOWS ONLY! Requires a Kinect2 and the Kinect v2 for Processing library
+ 
+ Original example by Thomas Sanchez Lengeling.
  http://codigogenerativo.com/
  
  KinectPV2, Kinect for Windows v2 library for processing
  Modified to send joint positions to Wekinator by Nikolaj Mikkelsen & Andreas Refsgaard
  Skeleton depth tracking example
- */
+*/
 
 import java.util.ArrayList;
 import KinectPV2.KJoint;
