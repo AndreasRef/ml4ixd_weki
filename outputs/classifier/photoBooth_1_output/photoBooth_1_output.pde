@@ -1,8 +1,8 @@
 //Quick output sketch showing the basics of building a conditional photo booth for Processing with a input from Wekinator
 //Train Wekinator in classification mode with two classes:
-//Class 1 is neutral and class 2 will trigg the photo booth to take a picture
+//Class 1 is neutral and class 2 will trigg the photo booth to take a picture. 
 
-//Made by Andreas Refsgaard 2018
+//www.andreasrefsgaard.dk - 2018
 
 import processing.video.*;
 import oscP5.*;
