@@ -8,11 +8,10 @@ NetAddress dest;
 Serial myPort;
 int input = 0;
 
-float[] inputs = new float [1];
+float[] inputs = new float [1]; //How many values from Arduino?
 
 void setup() {
   size(400, 400);
-  println(Serial.list());
   myPort = new Serial(this, Serial.list()[1], 9600);
   myPort.bufferUntil('\n');
   
