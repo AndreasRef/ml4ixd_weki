@@ -5,7 +5,7 @@
  * Princeton Architectural Press, 2010
  * ISBN 9781568989372
  * 
- * Modified by Andreas Refsgaard to recive 5 continious values between 0.0-1.0 from Wekinator
+ * Modified by Andreas Refsgaard to recive 5 continous values between 0.0-1.0 from Wekinator
  */
 
 import oscP5.*;
