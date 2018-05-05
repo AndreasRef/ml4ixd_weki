@@ -1,4 +1,4 @@
-//Quick output sketch showing the basics of building a conditional photo booth for Processing with a input from Wekinator
+//Basic sketch showing the basics of building a conditional photo booth for Processing with a input from Wekinator
 //Train Wekinator in classification mode with two classes:
 //Class 1 is neutral and class 2 will trigg the photo booth to take a picture. 
 
@@ -56,7 +56,6 @@ void draw() {
     pg.image(lastSnapShot, 0, 0);
     pg.endDraw();
     image(pg, 0, 0);
-    //println("showLatest");
   }
 
   if (timer < 5) {   
@@ -68,8 +67,6 @@ void draw() {
   if (timer > 100) {
     showLatestPhoto = false;
   }
-
-  //text(timer, 10, 10);
   timer++;
 }
 

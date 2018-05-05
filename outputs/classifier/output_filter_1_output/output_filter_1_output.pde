@@ -1,9 +1,9 @@
 /*
-First version of a tool for filtering Wekinator classification outputs 
+  First version of a tool for filtering Wekinator classification outputs 
  based on stastical mode https://en.wikipedia.org/wiki/Mode_(statistics)
  
  - Outputs the mode + the relative occurrence of the mode (measured as percentage from 0-100) during windowSize
- - Outputs {-1} if there is no mode (in case 2 or more classes appear the same number of times during the window)
+ - Outputs {-1} if mode is split between two values or mode is less than threshold (0-100 percent)
  
  www.andreasrefsgaard.dk - 2018
  */
@@ -17,11 +17,11 @@ int count = 0;
 
 boolean arrayIsFull = false;
 
-int currentClass;
+int rawClass; 
+int currentClass = -1;
 int currentMode;
 int currentPtc;
-int filteredOutput = -1;
-int threshold = 100;
+int threshold = 95;
 
 void setup() {
   size(600, 400);
@@ -29,43 +29,45 @@ void setup() {
   for (int i = 0; i<windowSize; i++) { //Fill everything with -1 to begin with
     outputs[i] = -1;
   }
-  textSize(32);
+  
 }
 
 void draw() {
   background(0);
 
-  AddNewValue(currentClass);
+  AddNewValue(rawClass);
 
   if (mode(outputs).get(0) != -1) {
     currentMode = mode(outputs).get(0);
     currentPtc = mode(outputs).get(1);
 
     if (currentPtc >= threshold) {
-      filteredOutput = currentMode;
+      currentClass = currentMode;
     } else {
-      filteredOutput = -1;
+      currentClass = -1;
     }
   } else {
-    filteredOutput = -1;
+    currentClass = -1;
   }
-
+  
+  textSize(16);
   fill(255);
-  text("raw class from Wekinator: " + currentClass, 10, 1*height/5);
+  text("raw class from Wekinator: " + rawClass, 10, 1*height/5);
   text("most frequent class: " +  currentMode, 10, 2*height/5);
   text("most frequent class %: " +  currentPtc + "%", 10, 3*height/5);
 
-  if (filteredOutput == -1) {
+  textSize(32);
+  if (currentClass == -1) {
     fill(255, 0, 0);
   } else {
     fill(0, 255, 0);
   }
-  text("filtered output: " +  filteredOutput, 10, 4*height/5);
+  text("filtered output: " +  currentClass, 10, 4*height/5);
 }
 
 void oscEvent(OscMessage message) {
   if (message.checkAddrPattern("/wek/outputs") == true) {
-    currentClass = (int) message.get(0).floatValue();
+    rawClass = (int) message.get(0).floatValue();
   }
 }
 

@@ -15,9 +15,9 @@ void setup()
   minim = new Minim(this);
   oscP5 = new OscP5(this, 12000);
 
-  sounds = new AudioSample[4];  
+  sounds = new AudioSample[5];  
   for (int i = 0; i< sounds.length; i++) {
-    sounds[i] = minim.loadSample( i + ".wav");
+    sounds[i] = minim.loadSample( i + ".mp3");
   }
 }
 
