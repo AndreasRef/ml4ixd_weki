@@ -1,5 +1,0 @@
-To do:
-
-Make kinect grid for kinect v2
-Add web socket example
-Keras Processing OSC transfer learning
