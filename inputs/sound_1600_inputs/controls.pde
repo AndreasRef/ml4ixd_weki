@@ -19,7 +19,7 @@ void sliderSetup() {
     .setPosition(graphStartX, margin*2.5)
     .setSize(100, 20)
     .setValue(5)
-    .setRange(0, 10)
+    .setRange(1, 30)
     ;  
 
   cp5.addSlider("freqCut")

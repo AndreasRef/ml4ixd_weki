@@ -11,6 +11,9 @@ import ddf.minim.analysis.*;
 
 import oscP5.*;
 import netP5.*;
+import controlP5.*;
+
+ControlP5 cp5;
 
 OscP5 oscP5;
 NetAddress dest;
@@ -35,12 +38,17 @@ float volThreshold = 2.0;
 
 boolean triggerMode = false;
 
-int triggerTimerThreshold = 200;
+int triggerTimerThreshold = 500;
 long startTimer = 0;
 
 void setup() {
   size(850, 300);
   background(200);
+  
+  cp5 = new ControlP5(this);
+  cp5.addToggle("triggerMode").linebreak();
+  cp5.addSlider("volThreshold",0.0,10.0);
+  
 
   minim   = new Minim(this);
   myAudio = minim.getLineIn(Minim.MONO); 
@@ -86,8 +94,8 @@ void draw() {
    sending = true;
  }
   
-  text("avgVolume: " + avgVolume, 10, 20);
-  if (sending) text("sending!", 10, 40);
+  text("avgVolume: " + avgVolume, 10, height - 60);
+  if (sending) text("sending!", 10, height - 30);
   
   myAudioIndexAmp = myAudioIndex;
 

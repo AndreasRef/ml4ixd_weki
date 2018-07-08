@@ -11,14 +11,15 @@ int input = 0;
 float[] inputs = new float [1]; //How many values from Arduino?
 
 void setup() {
-  size(400, 400);
+  size(400, 400); 
+  printArray(Serial.list());
+ 
   myPort = new Serial(this, Serial.list()[1], 9600);
   myPort.bufferUntil('\n');
   
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
   
-  colorMode(RGB, 1023);
 }
 
 void draw() {

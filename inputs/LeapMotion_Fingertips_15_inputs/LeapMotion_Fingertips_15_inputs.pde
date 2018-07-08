@@ -2,8 +2,10 @@
 //Sends 15 features ((x,y,z) tip of each finger) to Wekinator
 // sends to port 6448 using /wek/inputs message
 
-import de.voidplus.leapmotion.*;
+//Requires the Leap Motion V2 SDK: https://developer.leapmotion.com/sdk/v2
+//And the Leap Motion for Processing library by Darius Morawiec
 
+import de.voidplus.leapmotion.*;
 import oscP5.*;
 import netP5.*;
 
@@ -304,4 +306,3 @@ void sendInputNames() {
   oscP5.send(msg, dest); 
   println("Sent finger names" + n);
 }
-
