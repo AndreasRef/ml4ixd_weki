@@ -28,7 +28,7 @@ NetAddress dest;
 
 void setup() {
  // colorMode(HSB);
-  size(640, 480, P2D);
+  size(640, 480);
 
   String[] cameras = Capture.list();
 
@@ -44,7 +44,8 @@ void setup() {
       println(cameras[i]);
     } */
 
-   video = new Capture(this, 640, 480);
+   //video = new Capture(this, 640, 480);
+    video = new Capture(this, cameras[0]);
     
     // Start capturing the images from the camera
     video.start();
@@ -57,7 +58,6 @@ void setup() {
   /* start oscP5, listening for incoming messages at port 12000 */
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
-  
 }
 
 void draw() {

@@ -25,7 +25,13 @@ void setup() {
   size(640, 480);
   oscP5 = new OscP5(this,9000);
   dest = new NetAddress("127.0.0.1",6448);
-  video = new Capture(this, 640, 480);
+  
+  String[] cameras = Capture.list();
+  println("Available cameras:");
+  printArray(cameras);
+  
+  //video = new Capture(this, 640, 480);
+  video = new Capture(this, cameras[0]);
  
   opencv = new OpenCV(this, 640, 480);
   opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE);  
